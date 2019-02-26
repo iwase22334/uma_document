@@ -1,0 +1,49 @@
+@startuml
+
+cloud {
+    [JRA]
+}
+
+cloud {
+    [ipat]
+}
+
+package "jra_connector" {
+    () "COM" as jv_link_if
+    [jv_link] -- jv_link_if 
+    jv_link_if --> [event_crawler] : "Realtime data.\n(RaceInfo, Odds, etc."
+    jv_link_if --> [data_pump] : "Race data"
+}
+
+package "uma_agent" {
+    () "HTTP/JSON" as agent_io
+    [agent] -- agent_io 
+    [trainer]
+
+    folder {
+        [agent_specific_data]
+    }
+}
+
+database "postgres" {
+    folder {
+        [rawdata]
+    }
+
+    folder "statistics" {
+        [vote_data]
+    }
+}
+
+[jv_link] -- [JRA]
+[data_pump] --> [rawdata]
+
+[event_crawler] -- agent_io 
+[event_crawler] -- [ipat]
+[event_crawler] --> [vote_data]
+
+[trainer] <-- [rawdata]
+[trainer] --> [agent_specific_data]
+[agent] <-- [agent_specific_data]
+
+@enduml
