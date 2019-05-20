@@ -1,49 +1,55 @@
 @startuml
 
-cloud {
-    [JRA]
+database "postgres" {
+    [rawdata]
+    [log]
+}
+
+package "jra_connector" {
+    interface "COM" as jv_link_if
+    [jv_link] - jv_link_if 
+    [event_crawler] ..> jv_link_if : "Request realtime data.\n(RaceInfo, Odds, etc."
+    [data_pump] ..> jv_link_if : "Request Race data"
+}
+
+[data_pump] --> [rawdata]
+
+package "uma_agent" {
+    interface "HTTP/JSON" as agent_if
+    [agent] - agent_if 
+    folder {
+        [agent_specific_data]
+    }
+    [trainer]
+    [trainer] --> [agent_specific_data]
+    [agent_specific_data] --> [agent]
+}
+
+package "tester" { 
+    interface "HTTP/JSON" as simulator_if
+    [race_simulator] - simulator_if
+    [event_tester]
+    [event_tester] ..> simulator_if : "Request vote with\n passing the race data" 
+    [race_simulator] <- [rawdata]
 }
 
 cloud {
     [ipat]
 }
 
-package "jra_connector" {
-    () "COM" as jv_link_if
-    [jv_link] -- jv_link_if 
-    jv_link_if --> [event_crawler] : "Realtime data.\n(RaceInfo, Odds, etc."
-    jv_link_if --> [data_pump] : "Race data"
+cloud {
+    [JRA]
 }
 
-package "uma_agent" {
-    () "HTTP/JSON" as agent_io
-    [agent] -- agent_io 
-    [trainer]
+[jv_link] <-up-> [JRA]
+[event_crawler] ..> agent_if 
+[event_crawler] -up-> [ipat]
+[event_crawler] -> [log]
 
-    folder {
-        [agent_specific_data]
-    }
-}
-
-database "postgres" {
-    folder {
-        [rawdata]
-    }
-
-    folder "statistics" {
-        [vote_data]
-    }
-}
-
-[jv_link] -- [JRA]
-[data_pump] --> [rawdata]
-
-[event_crawler] -- agent_io 
-[event_crawler] -- [ipat]
-[event_crawler] --> [vote_data]
+[event_tester] <- [rawdata]
+[event_tester] ..> [agent_if] : "Request vote with\n passing the race data"
 
 [trainer] <-- [rawdata]
-[trainer] --> [agent_specific_data]
-[agent] <-- [agent_specific_data]
+[agent] <-- [rawdata]
 
 @enduml
