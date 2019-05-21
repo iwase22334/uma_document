@@ -27,10 +27,10 @@ package "uma_agent" {
 
 package "tester" { 
     interface "HTTP/JSON" as simulator_if
-    [race_simulator] - simulator_if
-    [event_tester]
-    [event_tester] ..> simulator_if : "Request vote with\n passing the race data" 
-    [race_simulator] <- [rawdata]
+    [dummy_race] - simulator_if
+    [dummy_crawler]
+    [dummy_crawler] ..> simulator_if : "Request race result with\n passing the vote" 
+    [dummy_race] <- [rawdata]
 }
 
 cloud {
@@ -46,8 +46,8 @@ cloud {
 [event_crawler] -up-> [ipat]
 [event_crawler] -> [log]
 
-[event_tester] <- [rawdata]
-[event_tester] ..> [agent_if] : "Request vote with\n passing the race data"
+[dummy_crawler] <- [rawdata]
+[dummy_crawler] ..> [agent_if] : "Request vote with\n passing the race data"
 
 [trainer] <-- [rawdata]
 [agent] <-- [rawdata]
