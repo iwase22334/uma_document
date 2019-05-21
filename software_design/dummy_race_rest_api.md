@@ -1,3 +1,4 @@
+## request sample
 {
     "race_id": {
         "year": "2018",
@@ -32,4 +33,16 @@
     "sanrenpuku_vote": [
         { "kumiban": "010812",  "hyosu": 1 }
     ]
+}
+
+## response sample
+
+{
+    "payout": 2000
+}
+
+## error response sample
+
+{
+    "error": "not found"
 }
