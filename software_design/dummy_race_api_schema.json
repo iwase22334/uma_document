@@ -1,0 +1,332 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "race_id"
+  ],
+  "properties": {
+    "race_id": {
+      "$id": "#/properties/race_id",
+      "type": "object",
+      "title": "The Race_id Schema",
+      "required": [
+        "year",
+        "monthday",
+        "jyocd",
+        "kaiji",
+        "nichiji",
+        "racenum"
+      ],
+      "properties": {
+        "year": {
+          "$id": "#/properties/race_id/properties/year",
+          "type": "string",
+          "title": "The Year Schema",
+          "default": "",
+          "examples": [
+            "2018"
+          ],
+          "pattern": "^[0-9]{4}$"
+        },
+        "monthday": {
+          "$id": "#/properties/race_id/properties/monthday",
+          "type": "string",
+          "title": "The Monthday Schema",
+          "default": "",
+          "examples": [
+            "1001"
+          ],
+          "pattern": "^[0-9]{4}$"
+        },
+        "jyocd": {
+          "$id": "#/properties/race_id/properties/jyocd",
+          "type": "string",
+          "title": "The Jyocd Schema",
+          "default": "",
+          "examples": [
+            "01"
+          ],
+          "pattern": "^[0-9]{2}$"
+        },
+        "kaiji": {
+          "$id": "#/properties/race_id/properties/kaiji",
+          "type": "string",
+          "title": "The Kaiji Schema",
+          "default": "",
+          "examples": [
+            "01"
+          ],
+          "pattern": "^[0-9]{2}$"
+        },
+        "nichiji": {
+          "$id": "#/properties/race_id/properties/nichiji",
+          "type": "string",
+          "title": "The Nichiji Schema",
+          "default": "",
+          "examples": [
+            "01"
+          ],
+          "pattern": "^[0-9]{2}$"
+        },
+        "racenum": {
+          "$id": "#/properties/race_id/properties/racenum",
+          "type": "string",
+          "title": "The Racenum Schema",
+          "default": "",
+          "examples": [
+            "01"
+          ],
+          "pattern": "^[0-9]{2}$"
+        }
+      }
+    },
+    "tansyo_vote": {
+      "$id": "#/properties/tansyo_vote",
+      "type": "array",
+      "title": "The Tansyo_vote Schema",
+      "items": {
+        "$id": "#/properties/tansyo_vote/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "umaban",
+          "hyosu"
+        ],
+        "properties": {
+          "umaban": {
+            "$id": "#/properties/tansyo_vote/items/properties/umaban",
+            "type": "string",
+            "title": "The Umaban Schema",
+            "default": "",
+            "examples": [
+              "01"
+            ],
+            "pattern": "^[0-9]{2}$"
+          },
+          "hyosu": {
+            "$id": "#/properties/tansyo_vote/items/properties/hyosu",
+            "type": "integer",
+            "title": "The Hyosu Schema",
+            "default": 0,
+            "examples": [
+              20
+            ]
+          }
+        }
+      }
+    },
+    "hukusyo_vote": {
+      "$id": "#/properties/hukusyo_vote",
+      "type": "array",
+      "title": "The Hukusyo_vote Schema",
+      "items": {
+        "$id": "#/properties/hukusyo_vote/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "umaban",
+          "hyosu"
+        ],
+        "properties": {
+          "umaban": {
+            "$id": "#/properties/hukusyo_vote/items/properties/umaban",
+            "type": "string",
+            "title": "The Umaban Schema",
+            "default": "",
+            "examples": [
+              "03"
+            ],
+            "pattern": "^[0-9]{2}$"
+          },
+          "hyosu": {
+            "$id": "#/properties/hukusyo_vote/items/properties/hyosu",
+            "type": "integer",
+            "title": "The Hyosu Schema",
+            "default": 0,
+            "examples": [
+              13
+            ]
+          }
+        }
+      }
+    },
+    "wakuren_vote": {
+      "$id": "#/properties/wakuren_vote",
+      "type": "array",
+      "title": "The Wakuren_vote Schema",
+      "items": {
+        "$id": "#/properties/wakuren_vote/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "kumiban",
+          "hyosu"
+        ],
+        "properties": {
+          "kumiban": {
+            "$id": "#/properties/wakuren_vote/items/properties/kumiban",
+            "type": "string",
+            "title": "The Kumiban Schema",
+            "default": "",
+            "examples": [
+              "58"
+            ],
+            "pattern": "^[0-9]{2}$"
+          },
+          "hyosu": {
+            "$id": "#/properties/wakuren_vote/items/properties/hyosu",
+            "type": "integer",
+            "title": "The Hyosu Schema",
+            "default": 0,
+            "examples": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    "umaren_vote": {
+      "$id": "#/properties/umaren_vote",
+      "type": "array",
+      "title": "The Umaren_vote Schema",
+      "items": {
+        "$id": "#/properties/umaren_vote/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "kumiban",
+          "hyosu"
+        ],
+        "properties": {
+          "kumiban": {
+            "$id": "#/properties/umaren_vote/items/properties/kumiban",
+            "type": "string",
+            "title": "The Kumiban Schema",
+            "default": "",
+            "examples": [
+              "0413"
+            ],
+            "pattern": "^[0-9]{4}$"
+          },
+          "hyosu": {
+            "$id": "#/properties/umaren_vote/items/properties/hyosu",
+            "type": "integer",
+            "title": "The Hyosu Schema",
+            "default": 0,
+            "examples": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    "wide_vote": {
+      "$id": "#/properties/wide_vote",
+      "type": "array",
+      "title": "The Wide_vote Schema",
+      "items": {
+        "$id": "#/properties/wide_vote/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "kumiban",
+          "hyosu"
+        ],
+        "properties": {
+          "kumiban": {
+            "$id": "#/properties/wide_vote/items/properties/kumiban",
+            "type": "string",
+            "title": "The Kumiban Schema",
+            "default": "",
+            "examples": [
+              "1318"
+            ],
+            "pattern": "^[0-9]{4}$"
+          },
+          "hyosu": {
+            "$id": "#/properties/wide_vote/items/properties/hyosu",
+            "type": "integer",
+            "title": "The Hyosu Schema",
+            "default": 0,
+            "examples": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    "umatan_vote": {
+      "$id": "#/properties/umatan_vote",
+      "type": "array",
+      "title": "The Umatan_vote Schema",
+      "items": {
+        "$id": "#/properties/umatan_vote/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "kumiban",
+          "hyosu"
+        ],
+        "properties": {
+          "kumiban": {
+            "$id": "#/properties/umatan_vote/items/properties/kumiban",
+            "type": "string",
+            "title": "The Kumiban Schema",
+            "default": "",
+            "examples": [
+              "0108"
+            ],
+            "pattern": "^[0-9]{4}$"
+          },
+          "hyosu": {
+            "$id": "#/properties/umatan_vote/items/properties/hyosu",
+            "type": "integer",
+            "title": "The Hyosu Schema",
+            "default": 0,
+            "examples": [
+              1
+            ]
+          }
+        }
+      }
+    },
+    "sanrenpuku_vote": {
+      "$id": "#/properties/sanrenpuku_vote",
+      "type": "array",
+      "title": "The Sanrenpuku_vote Schema",
+      "items": {
+        "$id": "#/properties/sanrenpuku_vote/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "kumiban",
+          "hyosu"
+        ],
+        "properties": {
+          "kumiban": {
+            "$id": "#/properties/sanrenpuku_vote/items/properties/kumiban",
+            "type": "string",
+            "title": "The Kumiban Schema",
+            "default": "",
+            "examples": [
+              "010812"
+            ],
+            "pattern": "^[0-9]{6}$"
+          },
+          "hyosu": {
+            "$id": "#/properties/sanrenpuku_vote/items/properties/hyosu",
+            "type": "integer",
+            "title": "The Hyosu Schema",
+            "default": 0,
+            "examples": [
+              1
+            ]
+          }
+        }
+      }
+    }
+  }
+}
