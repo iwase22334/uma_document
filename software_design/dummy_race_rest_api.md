@@ -44,5 +44,5 @@
 ## error response sample
 
 {
-    "error": "not found"
+    "error": "Record not found"
 }
