@@ -1,0 +1,55 @@
+@startuml
+
+database "postgres" {
+    [rawdata]
+    [log]
+}
+
+package "jra_connector" {
+    interface "COM" as jv_link_if
+    [jv_link] - jv_link_if 
+    [event_crawler] ..> jv_link_if : "Request realtime data.\n(RaceInfo, Odds, etc."
+    [data_pump] ..> jv_link_if : "Request Race data"
+}
+
+[data_pump] --> [rawdata]
+
+package "uma_agent" {
+    interface "HTTP/JSON" as agent_if
+    [agent] - agent_if 
+    folder {
+        [agent_specific_data]
+    }
+    [trainer]
+    [trainer] --> [agent_specific_data]
+    [agent_specific_data] --> [agent]
+}
+
+package "tester" { 
+    interface "HTTP/JSON" as simulator_if
+    [dummy_race] - simulator_if
+    [dummy_crawler]
+    [dummy_crawler] ..> simulator_if : "Request race result with\n passing the vote" 
+    [dummy_race] <- [rawdata]
+}
+
+cloud {
+    [ipat]
+}
+
+cloud {
+    [JRA]
+}
+
+[jv_link] <-up-> [JRA]
+[event_crawler] ..> agent_if 
+[event_crawler] -up-> [ipat]
+[event_crawler] -> [log]
+
+[dummy_crawler] <- [rawdata]
+[dummy_crawler] ..> [agent_if] : "Request vote with\n passing the race data"
+
+[trainer] <-- [rawdata]
+[agent] <-- [rawdata]
+
+@enduml
