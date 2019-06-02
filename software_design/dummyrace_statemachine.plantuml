@@ -1,0 +1,17 @@
+@startuml
+[*] --> Accepting
+
+
+' Normal system
+Accepting -> Receiving : TCP connection establish
+Receiving -> Sending : Receive HTTP Message complete \n or invalid HTTP message
+Sending -> Closing : Send complete
+Sending --> Receiving : Send complete\n(persistent connection enable) 
+Closing --> Accepting  
+
+' Error system
+Accepting --> Accepting : Connection failed
+Receiving --> Accepting : Timeout or Disconnect
+Sending --> Accepting : Timeout or Disconnect
+
+@enduml
