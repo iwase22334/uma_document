@@ -1,17 +1,30 @@
 @startuml
-[*] --> Accepting
 
+state Accepting
 
+State Established {
 ' Normal system
-Accepting -> Receiving : TCP connection establish
-Receiving -> Sending : Receive HTTP Message complete \n or invalid HTTP message
-Sending -> Closing : Send complete
+state Receiving : Receive http message
+state Processing : Process Request 
+state Sending : Send result 
+
+[*] -> Receiving : TCP connection establish
+Receiving -> Processing: Receive HTTP Message complete \n or invalid HTTP message
+Receiving -> Sending : Invalid HTTP message
+Processing -> Sending : Process finish
+Sending -> [*] : Send finish
 Sending --> Receiving : Send complete\n(persistent connection enable) 
-Closing --> Accepting  
 
 ' Error system
-Accepting --> Accepting : Connection failed
-Receiving --> Accepting : Timeout or Disconnect
-Sending --> Accepting : Timeout or Disconnect
+Receiving -> [*] : Connection closed
+Sending -> [*] : Connection closed
+}
+
+state Closing
+
+[*] -> Accepting : Accept is started concurrently\n by the server
+Accepting -> Established
+Established -> Closing
+Closing -> [*]
 
 @enduml
