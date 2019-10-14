@@ -44,10 +44,10 @@ package "uma_agent" {
     [trainer] --> [model] : Save data.
 
     [trainer] ..> [proxy] : Request data
-    [vote_agent] ..> [proxy] : Request data
+    [winprob_estimator] ..> [proxy] : Request data
 
-    [vote_agent] - agent_if 
-    [vote_agent] ..> [model] : Load data.
+    [winprob_estimator] - agent_if 
+    [winprob_estimator] ..> [model] : Load data.
 }
 
 package "tester" { 
