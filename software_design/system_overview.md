@@ -8,15 +8,6 @@ database "uma_processed" {
     component "processed data" as processeddata 
 }
 
-database "uma_bulletin" {
-    component "Bulletin data" as bullet 
-}
-
-database "uma_log" {
-    [log]
-}
-
-
 interface "COM" as jv_link_if
 [jv_link] - jv_link_if 
 
@@ -31,11 +22,6 @@ package "uma_agent" {
     component "Dataset Proxy" as proxy
 
     interface "HTTP/JSON" as agent_if
-    note right
-      Desigined according to REST API.
-      API is designed not to depend on
-      parameter set that used by agent. 
-    end note
 
     folder {
         component "model, parameter" as model
@@ -52,10 +38,9 @@ package "uma_agent" {
 
 package "tester" { 
     interface "HTTP/JSON" as simulator_if
-    note right: Desigined according to REST API.\n Easy to access by using \n uma_dummyrace_client.
     [dummy_race] - simulator_if
-    [dummy_crawler]
-    [dummy_crawler] ..> simulator_if : "Vote and get payout" 
+    [dummycoordinator]
+    [dummycoordinator] ..> simulator_if : "Vote and get payout" 
     [dummy_race] <- [rawdata]
 }
 
@@ -70,11 +55,9 @@ cloud {
 [jv_link] <--> [JRA]
 [event_crawler] ..> agent_if: "Request race result with\n passing the vote"
 [event_crawler] --> [ipat]
-[event_crawler] -> [log]
-[dummy_crawler] -> [log]
 
-[dummy_crawler] <- [rawdata]
-[dummy_crawler] ..> agent_if : "Request vote with\n passing the race data"
+[dummycoordinator] <- [rawdata]
+[dummycoordinator] ..> agent_if : "Request vote with\n passing the race data"
 
 [rawdata] -> [proxy]
 [processeddata] -> [proxy]
