@@ -19,7 +19,7 @@ package "jra_connector" {
 }
 
 package "uma_agent" {
-    component "Dataset Proxy" as proxy
+    component "proxy" as proxy
 
     interface "HTTP/JSON" as agent_if
 
