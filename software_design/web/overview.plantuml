@@ -1,0 +1,58 @@
+@startuml
+
+cloud c {
+    database s3 {
+        folder html {
+            file "index.html" as index
+            file "time_chartdrawer.js" as tjs
+            file "prob_chartdrawer.js" as pjs
+            file "chart.html" as chart
+            index .> chart
+            tjs --> chart  : Draw canvas
+            chart -up-> tjs  : Race_id as query parameter
+
+            pjs --> chart  : Draw canvas
+            chart -up-> pjs  : Race_id as query parameter
+
+        }
+
+        folder time_prediction {
+            file "<id1>.json" as tp1
+            file "<id2>.json" as tp2
+            file "<id3>.json" as tp3
+        } 
+
+        folder probability_prediction_tansyo {
+            file "<id1>.json" as pp1
+            file "<id2>.json" as pp2
+            file "<id3>.json" as pp3
+        } 
+    }
+
+    file "model.h5" as model
+    database everydb2
+    control web_provisioner 
+
+    component tansyo_predictor
+    interface "HTTP/json" as tanp_i
+
+    component time_predictor
+    interface "HTTP/json" as tp_i
+
+    tansyo_predictor - tanp_i
+    tansyo_predictor .left.> tp_i
+
+    time_predictor - tp_i
+    everydb2 --> time_predictor 
+    model --> time_predictor
+
+    tp3 ---> tjs
+    pp3 ---> pjs
+
+    web_provisioner .up.> tp_i : call
+    web_provisioner .up.> tanp_i : call
+    web_provisioner ..> tp3 : create
+    web_provisioner ..> pp3 : create
+}
+
+@enduml
