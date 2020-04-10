@@ -4,15 +4,16 @@ cloud c {
     database s3 {
         folder html {
             file "index.html" as index
+            file "active_ids.js" as ajs
             file "time_chartdrawer.js" as tjs
             file "prob_chartdrawer.js" as pjs
             file "chart.html" as chart
-            index .> chart
+            index .> chart : Race_id as query parameter
             tjs --> chart  : Draw canvas
-            chart -up-> tjs  : Race_id as query parameter
+            chart --up- tjs
 
             pjs --> chart  : Draw canvas
-            chart -up-> pjs  : Race_id as query parameter
+            chart --up- pjs
 
         }
 
