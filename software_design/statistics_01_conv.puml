@@ -1,0 +1,44 @@
+@startuml
+
+entity id {
+    * year
+    * monthday
+    * ...
+}
+
+entity n_race { 
+    * id
+}
+
+entity n_uma_race { 
+    * id
+    * kettonum
+}
+
+entity n_uma{ 
+    * kettonum
+}
+
+entity uma_statistics_01{ 
+    * id
+    * kettonum
+}
+
+entity n_uma_race_past{ 
+    * id
+    * kettonum
+}
+
+entity n_race_past{ 
+    * id
+}
+
+id ||..|{ n_race
+id ||..|{ n_uma_race
+
+n_uma_race ||..|| n_uma
+n_uma_race ||..|| uma_statistics_01
+n_uma_race ||..|{ n_uma_race_past
+n_uma_race_past ||..|| n_race_past
+
+@enduml
