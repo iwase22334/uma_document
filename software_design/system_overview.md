@@ -40,8 +40,13 @@ package "tester" {
     interface "HTTP/JSON" as simulator_if
     [dummy_race] - simulator_if
     [dummycoordinator]
-    [dummycoordinator] ..> simulator_if : "Vote and get payout" 
-    [dummy_race] <- [rawdata]
+    [dummycoordinator] ..> simulator_if : "Vote and get payout"
+    [dummy_race] <-- [rawdata]
+
+    interface "HTTP/JSON" as dummyodds_if
+    [dummycoordinator] ..> dummyodds_if : "get odds"
+    [dummy_odds] - dummyodds_if
+    [dummy_odds] <-- [rawdata]
 }
 
 cloud {

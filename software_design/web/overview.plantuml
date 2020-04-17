@@ -9,6 +9,10 @@ cloud c {
             file "prob_chartdrawer.js" as pjs
             file "chart.html" as chart
             index .> chart : Race_id as query parameter
+
+            ajs --- index
+
+            tjs --> chart  : Draw canvas
             chart --up- tjs
 
             chart --up- pjs
@@ -16,17 +20,14 @@ cloud c {
             folder time_data {
                 file "<id1>.json" as tp1
                 file "<id2>.json" as tp2
-                file "<id3>.json" as tp3
                 note right: compressed by \nKernelDensityEstimation
             } 
 
             folder prob_tansyo_data {
                 file "<id1>.json" as pp1
                 file "<id2>.json" as pp2
-                file "<id3>.json" as pp3
             } 
         }
-
     }
 
     file "model.h5" as model
@@ -42,13 +43,11 @@ cloud c {
     folder raw_time_data {
         file "<id1>.json" as rtp1
         file "<id2>.json" as rtp2
-        file "<id3>.json" as rtp3
     } 
 
     folder raw_prob_tansyo_data {
         file "<id1>.json" as rpp1
         file "<id2>.json" as rpp2
-        file "<id3>.json" as rpp3
     } 
 
     winprobestimator2 - tanp_i
@@ -58,15 +57,15 @@ cloud c {
     model --> timepredictor
 
     ajs --- index
-    tp3 ---> tjs
-    pp3 ---> pjs
+    tp2 ---> tjs
+    pp2 ---> pjs
 
     webprovisioner .up.> tp_i : call
     webprovisioner .up.> tanp_i : call
-    webprovisioner ..up.> rtp3 : create
-    webprovisioner ..up.> rpp3 : create
-    webprovisioner ..> tp3 : create
-    webprovisioner ..> pp3 : create
+    webprovisioner ..up.> rtp2 : create
+    webprovisioner ..up.> rpp2 : create
+    webprovisioner ..> tp2 : create
+    webprovisioner ..> pp2 : create
     webprovisioner ..> ajs : create
 }
 
