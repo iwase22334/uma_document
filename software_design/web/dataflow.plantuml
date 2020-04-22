@@ -1,0 +1,28 @@
+@startuml
+
+card "race_id" as id
+card "race_racedata" as rd
+file "raw_time_data" as rtd
+file "raw_prob_tansyo_data" as rptd
+file "time_data" as td
+file "prob_tansyo_data" as ptd
+
+component "timepredictor" as tp
+component "winprobestimator" as wp
+
+component "compress_time.py" as cmppy
+component "compress.sh" as cmpsh
+
+id --> tp
+rd -> tp
+tp --> rtd
+rtd --> wp
+wp --> rptd
+wp --> ptd
+
+rtd -> cmppy
+cmppy --> td : thin out data points 
+td -> cmpsh : cut off decimal points
+cmpsh -> td
+
+@enduml
