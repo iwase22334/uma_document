@@ -1,0 +1,67 @@
+@startuml
+
+database everydb2 {
+    file n_hanro
+    file n_uma
+    file n_uma_race
+    file n_race
+}
+
+file kettonum_list.csv
+file hanro.csv
+file race.csv
+file race_normalized.csv
+
+file "x_train_*.npy" as xtrain
+file "y_train_*.npy" as ytrain
+file "x_eval_*.npy"  as xeval
+file "y_eval_*.npy"  as yeval
+
+file "model/*.h5" as h5
+file "log/*.json"  as logjson
+
+rectangle 00_generate_kettonumlist.py
+rectangle 01_hanro.py
+rectangle 01_merge_tables.py
+rectangle 02_normalize.py
+rectangle 03_genarate_fragment.py
+rectangle 04_trainer.py
+rectangle 05_ranking.sh
+
+n_uma --> 00_generate_kettonumlist.py : kettonum 
+00_generate_kettonumlist.py --> kettonum_list.csv
+
+n_hanro ----> 01_hanro.py
+n_uma ----> 01_hanro.py : birthday
+
+01_hanro.py --> hanro.csv
+
+n_uma ----> 01_merge_tables.py
+n_uma_race ----> 01_merge_tables.py
+n_race ----> 01_merge_tables.py
+
+kettonum_list.csv --> 01_merge_tables.py
+01_merge_tables.py --> race.csv
+
+race.csv --> 02_normalize.py
+02_normalize.py --> race_normalized.csv
+
+race_normalized.csv --> 03_genarate_fragment.py
+hanro.csv --> 03_genarate_fragment.py
+
+03_genarate_fragment.py --> xtrain
+03_genarate_fragment.py --> ytrain
+03_genarate_fragment.py --> xeval
+03_genarate_fragment.py --> yeval
+
+xtrain --> 04_trainer.py
+ytrain --> 04_trainer.py
+xeval --> 04_trainer.py
+yeval --> 04_trainer.py
+
+04_trainer.py --> h5
+04_trainer.py --> logjson
+
+logjson --> 05_ranking.sh
+
+@enduml
